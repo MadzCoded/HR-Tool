@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HR Tool – EquiSync</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <h1>EquiSync</h1>
+      <span class="subtitle">Horse Reality Tracker · Manual Entry</span>
+    </div>
+    <div class="topbar-meta">
+      <span class="badge">Local only · Data stored in your browser</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <button class="nav-item active" data-page="horses">Horses</button>
+      <button class="nav-item" data-page="breeding">Breeding Planner</button>
+      <button class="nav-item" data-page="finance">Finance</button>
+    </aside>
+
+    <section class="content">
+      <!-- HORSES PAGE -->
+      <div id="page-horses">
+        <div class="page-header">
+          <h2>Your Horses</h2>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search by name, breed, life number..."
+          />
+        </div>
+
+        <div class="columns">
+          <!-- Horse form -->
+          <div class="card form-card">
+            <h3 id="form-title">Add Horse</h3>
+
+            <form id="horse-form">
+              <input type="hidden" id="horse-id" />
+
+              <div class="form-row">
+                <label for="horse-name">Name</label>
+                <input id="horse-name" type="text" required />
+              </div>
+
+              <div class="form-row two-cols">
+                <div>
+                  <label for="horse-sex">Sex</label>
+                  <select id="horse-sex">
+                    <option value="Mare">Mare</option>
+                    <option value="Stallion">Stallion</option>
+                    <option value="Gelding">Gelding</option>
+                    <option value="Foal">Foal</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="horse-breed">Breed</label>
+                  <input id="horse-breed" type="text" placeholder="e.g. Arabian" />
+                </div>
+              </div>
+
+              <div class="form-row two-cols">
+                <div>
+                  <label for="horse-life">Life number</label>
+                  <input id="horse-life" type="text" placeholder="optional" />
+                </div>
+                <div>
+                  <label for="horse-gp">Overall GP</label>
+                  <input id="horse-gp" type="number" min="0" max="999" placeholder="e.g. 430" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label for="horse-role">Role / Tag</label>
+                <select id="horse-role">
+                  <option value="">None</option>
+                  <option value="Broodmare">Broodmare</option>
+                  <option value="Stud">Stud</option>
+                  <option value="Show">Show</option>
+                  <option value="Sales">Sales</option>
+                  <option value="Project">Project</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="horse-image">Image URL (optional)</label>
+                <input
+                  id="horse-image"
+                  type="url"
+                  placeholder="Paste horse image URL here"
+                />
+              </div>
+
+              <div class="form-row">
+                <label for="horse-notes">Notes</label>
+                <textarea
+                  id="horse-notes"
+                  rows="3"
+                  placeholder="Bloodlines, confo notes, breeding plans..."
+                ></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn primary" id="save-btn">Save horse</button>
+                <button type="button" class="btn subtle" id="reset-btn">Clear form</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Horse list -->
+          <div class="card list-card">
+            <div class="list-header">
+              <h3>Stable List</h3>
+              <span id="horse-count" class="count-pill">0 horses</span>
+            </div>
+            <div id="horse-list" class="horse-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BREEDING PAGE -->
+      <div id="page-breeding" style="display: none;">
+        <h2>Breeding Planner</h2>
+        <p class="muted">
+          This is a placeholder for your future breeding calculator. For now, you can
+          select two horses from your stable and jot down planned crosses.
+        </p>
+
+        <div class="card">
+          <div class="form-row two-cols">
+            <div>
+              <label for="breeding-mare">Mare</label>
+              <select id="breeding-mare"></select>
+            </div>
+            <div>
+              <label for="breeding-stallion">Stallion</label>
+              <select id="breeding-stallion"></select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="breeding-notes">Notes / Expectations</label>
+            <textarea
+              id="breeding-notes"
+              rows="3"
+              placeholder="Expected foal stats, goals, why this cross..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINANCE PAGE -->
+      <div id="page-finance" style="display: none;">
+        <h2>Finance Tracker</h2>
+        <p class="muted">
+          Quick DP ↔ HRC calculator and simple transaction log.
+        </p>
+
+        <div class="columns">
+          <div class="card form-card">
+            <h3>DP ↔ HRC Trade</h3>
+
+            <div class="form-row two-cols">
+              <div>
+                <label for="dp-amount">DP amount</label>
+                <input id="dp-amount" type="number" min="0" />
+              </div>
+              <div>
+                <label for="hrc-rate">HRC per DP</label>
+                <input id="hrc-rate" type="number" min="0" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label>Result</label>
+              <div id="finance-result" class="finance-result">
+                Enter DP and rate to calculate.
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn primary" id="calc-btn">Calculate</button>
+            </div>
+          </div>
+
+          <div class="card list-card">
+            <h3>Notes</h3>
+            <p class="muted">
+              You can use the horse notes on the Horses page to track per-horse costs
+              (purchase price, stud fees, winnings, etc.).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
